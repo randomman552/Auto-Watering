@@ -1,25 +1,52 @@
 #include <Arduino.h>
 
-#define PUMP_OUT_PIN = 12
-#define SENSOR_DIGITAL_IN = 11
-#define SENSOR_ANALOG_IN = 1
+#define PUMP_OUT_PIN 12
+#define SENSOR_DIGITAL_IN_PIN 11
+#define SENSOR_ANALOG_IN_PIN 1
+#define TARGET_SOIL_WATER_LEVEL 500
+#define WATERING_TIME 5000
+#define POST_WATERING_DELAY 20000
 
-// put function declarations here:
-int myFunction(int, int);
+void pumpOn()
+{
+  digitalWrite(PUMP_OUT_PIN, HIGH);
+}
+
+void pumpOff()
+{
+  digitalWrite(PUMP_OUT_PIN, LOW);
+}
+
+int getSoilWaterLevel()
+{
+  return analogRead(SENSOR_ANALOG_IN_PIN);
+}
 
 void setup()
 {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  // Set up pins
+  pinMode(PUMP_OUT_PIN, OUTPUT);
+  pinMode(SENSOR_DIGITAL_IN_PIN, INPUT);
+
+  // Set up serial
+  Serial.begin(9600);
 }
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
-}
+  auto soilWaterLevel = getSoilWaterLevel();
+  Serial.println(soilWaterLevel);
 
-// put function definitions here:
-int myFunction(int x, int y)
-{
-  return x + y;
+  if (soilWaterLevel > TARGET_SOIL_WATER_LEVEL)
+  {
+    Serial.println("Water level too low, watering");
+    pumpOn();
+    delay(WATERING_TIME);
+    Serial.println("Waiting...");
+    pumpOff();
+    delay(POST_WATERING_DELAY);
+    Serial.println("Finished watering");
+  }
+
+  delay(1000);
 }

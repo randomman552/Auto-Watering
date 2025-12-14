@@ -29,7 +29,7 @@ void setup()
   pinMode(SENSOR_DIGITAL_IN_PIN, INPUT);
 
   // Set up serial
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void loop()

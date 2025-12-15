@@ -37,16 +37,16 @@ void loop()
   auto soilWaterLevel = getSoilWaterLevel();
   Serial.println(soilWaterLevel);
 
-  if (soilWaterLevel > TARGET_SOIL_WATER_LEVEL)
-  {
-    Serial.println("Water level too low, watering");
-    pumpOn();
-    delay(WATERING_TIME);
-    Serial.println("Waiting...");
-    pumpOff();
-    delay(POST_WATERING_DELAY);
-    Serial.println("Finished watering");
-  }
+  // if (soilWaterLevel > TARGET_SOIL_WATER_LEVEL)
+  // {
+  //   Serial.println("Water level too low, watering");
+  //   pumpOn();
+  //   delay(WATERING_TIME);
+  //   Serial.println("Waiting...");
+  //   pumpOff();
+  //   delay(POST_WATERING_DELAY);
+  //   Serial.println("Finished watering");
+  // }
 
   delay(1000);
 }
